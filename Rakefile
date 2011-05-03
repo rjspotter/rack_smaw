@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "rack_smaw"
   gem.homepage = "http://github.com/rjspotter/rack_smaw"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Rack Simple Mixpanel Analytics Worker}
+  gem.description = %Q{A Rack Middleware that sends Mixpanel work to Simple Worker}
   gem.email = "rjspotter@gmail.com"
   gem.authors = ["R. Potter"]
   # dependencies defined in Gemfile
