@@ -1,31 +1,26 @@
 require 'wrest'
 require 'base64'
-require 'simple_worker'
 module Rack
   module Smaw
   
     class Base
     
-      def initialize(app,swkey,swsecret,mpkey,&block)
+      def initialize(app,mpkey,&block)
         @app = app
         Sender.mixpanel_key = mpkey
-        SimpleWorker.configure do |config|
-          config.access_key = swkey
-          config.secret_key = swsecret
-        end
         @sender = Sender.new
         @sender.parser = block
       end
 
       def call(env)
         @sender.env = env
-        @sender.queue
+        @sender.run
         @app.call(env)
       end
       
     end
 
-    class Sender  < SimpleWorker::Base
+    class Sender 
       attr_accessor :env, :parser
 
       def self.mixpanel_key=(key)
