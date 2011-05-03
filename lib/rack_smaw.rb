@@ -36,11 +36,11 @@ module Rack
       end
 
       def run
-        puts data = parser.call(env)
-        'http://api.mixpanel.com/track'.to_uri.get({
-                                                     :ip => 0,
-                                                     :data => ::Base64.encode64(data.to_json)
-                                                   })
+        'http://api.mixpanel.com/track'.
+          to_uri.get_async({
+                             :ip => 0,
+                             :data => ::Base64.encode64(parser.call(env).to_json)
+                           })
       end
       
 
