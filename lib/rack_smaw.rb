@@ -1,5 +1,4 @@
-require 'eventmachine'
-require 'em-http'
+require 'patron'
 require 'base64'
 module Rack
   module Smaw
@@ -11,6 +10,9 @@ module Rack
         Sender.mixpanel_key = mpkey
         @sender = Sender.new
         @sender.parser = block
+        @sender.client = Patron::Session.new
+        @sender.client.timeout = 5
+        @sender.client.base_url = 'http://api.mixpanel.com'
       end
 
       def call(env)
@@ -22,7 +24,7 @@ module Rack
     end
 
     class Sender 
-      attr_accessor :env, :parser
+      attr_accessor :env, :parser, :client
 
       def self.mixpanel_key=(key)
         @mixpanel_key = key
@@ -37,14 +39,7 @@ module Rack
       end
 
       def run
-          http = EventMachine::HttpRequest.
-          new('http://api.mixpanel.com/track').
-          get(:query => {
-                :ip => 0,
-                :data => ::Base64.encode64(parser.call(env).to_json)
-              })
-          http.errback { }
-          http.callback { }
+        client.get("/track?data=#{::Base64.encode64(parser.call(env).to_json)}&ip=0")
       end
       
 

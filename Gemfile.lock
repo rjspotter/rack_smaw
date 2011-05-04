@@ -1,19 +1,13 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    addressable (2.2.5)
     diff-lcs (1.1.2)
-    em-http-request (0.3.0)
-      addressable (>= 2.0.0)
-      escape_utils
-      eventmachine (>= 0.12.9)
-    escape_utils (0.2.3)
-    eventmachine (0.12.10)
     git (1.2.5)
     jeweler (1.6.0)
       bundler (~> 1.0.0)
       git (>= 1.2.5)
       rake
+    patron (0.4.11)
     rake (0.8.7)
     rcov (0.9.9)
     reek (1.2.8)
@@ -43,9 +37,8 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0.0)
-  em-http-request
-  eventmachine
   jeweler (~> 1.6.0)
+  patron
   rcov
   reek (~> 1.2.8)
   roodi (~> 2.1.0)
