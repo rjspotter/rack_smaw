@@ -1,4 +1,4 @@
-require 'patron'
+require 'httparty'
 require 'base64'
 module Rack
   module Smaw
@@ -24,7 +24,12 @@ module Rack
     end
 
     class Sender 
+<<<<<<< HEAD
       attr_accessor :env, :parser, :client
+=======
+
+      attr_accessor :env, :parser
+>>>>>>> a51768b036b9fde48ab22de70f6050d03d009de9
 
       def self.mixpanel_key=(key)
         @mixpanel_key = key
@@ -39,11 +44,18 @@ module Rack
       end
 
       def run
+<<<<<<< HEAD
         begin
         client.get("/track/?data=#{::Base64.encode64(parser.call(env).to_json).gsub(/\s/,'')}&ip=0")
         rescue
           #swallow errors (should error log here)
         end
+=======
+        HTTParty.get('http://api.mixpanel.com/track',{
+                             :ip => 0,
+                             :data => ::Base64.encode64(parser.call(env).to_json)
+                           })
+>>>>>>> a51768b036b9fde48ab22de70f6050d03d009de9
       end
       
 
