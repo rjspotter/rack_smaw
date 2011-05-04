@@ -11,7 +11,7 @@ module Rack
         @sender = Sender.new
         @sender.parser = block
         @sender.client = Patron::Session.new
-        @sender.client.timeout = 5
+        @sender.client.timeout = 10
         @sender.client.base_url = 'http://api.mixpanel.com'
       end
 
@@ -39,7 +39,11 @@ module Rack
       end
 
       def run
-        client.get("/track?data=#{::Base64.encode64(parser.call(env).to_json)}&ip=0")
+        begin
+        client.get("/track/?data=#{::Base64.encode64(parser.call(env).to_json).gsub(/\s/,'')}&ip=0")
+        rescue
+          #swallow errors (should error log here)
+        end
       end
       
 
