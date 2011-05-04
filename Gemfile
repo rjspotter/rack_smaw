@@ -3,7 +3,9 @@ source "http://rubygems.org"
 # Example:
 #   gem "activesupport", ">= 2.3.5"
 
-gem 'wrest'
+#gem 'wrest'
+gem 'eventmachine'
+gem 'em-http-request'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

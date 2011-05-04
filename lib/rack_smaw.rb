@@ -1,4 +1,5 @@
-require 'wrest'
+require 'eventmachine'
+require 'em-http'
 require 'base64'
 module Rack
   module Smaw
@@ -36,11 +37,14 @@ module Rack
       end
 
       def run
-        'http://api.mixpanel.com/track'.
-          to_uri.get_async({
-                             :ip => 0,
-                             :data => ::Base64.encode64(parser.call(env).to_json)
-                           })
+          http = EventMachine::HttpRequest.
+          new('http://api.mixpanel.com/track').
+          get(:query => {
+                :ip => 0,
+                :data => ::Base64.encode64(parser.call(env).to_json)
+              })
+          http.errback { }
+          http.callback { }
       end
       
 
