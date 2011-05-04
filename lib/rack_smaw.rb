@@ -36,10 +36,10 @@ module Rack
       end
 
       def run
-        HTTParty.get('http://api.mixpanel.com/track',{
+        HTTParty.get('http://api.mixpanel.com/track/',:query => {
                              :ip => 0,
-                             :data => ::Base64.encode64(parser.call(env).to_json)
-                           })
+                             :data => ::Base64.encode64(parser.call(env).to_json).gsub(/\s/,'')
+                           }).body
       end
       
 
