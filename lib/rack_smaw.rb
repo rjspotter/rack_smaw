@@ -10,9 +10,6 @@ module Rack
         Sender.mixpanel_key = mpkey
         @sender = Sender.new
         @sender.parser = block
-        @sender.client = Patron::Session.new
-        @sender.client.timeout = 10
-        @sender.client.base_url = 'http://api.mixpanel.com'
       end
 
       def call(env)
