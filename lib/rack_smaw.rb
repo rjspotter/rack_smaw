@@ -1,4 +1,4 @@
-require 'wrest'
+require 'httparty'
 require 'base64'
 module Rack
   module Smaw
@@ -21,6 +21,7 @@ module Rack
     end
 
     class Sender 
+
       attr_accessor :env, :parser
 
       def self.mixpanel_key=(key)
@@ -36,8 +37,7 @@ module Rack
       end
 
       def run
-        'http://api.mixpanel.com/track'.
-          to_uri.get_async({
+        HTTParty.get('http://api.mixpanel.com/track',{
                              :ip => 0,
                              :data => ::Base64.encode64(parser.call(env).to_json)
                            })
